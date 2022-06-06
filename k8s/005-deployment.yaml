@@ -1,0 +1,32 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask
+  namespace: projectblr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask
+  template:
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+      - name: flask
+        image: santoshr1016/sealapp:v0.1.2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: KEY1
+          valueFrom:
+            secretKeyRef:
+              name: flask-creds
+              key: key1
+        - name: KEY2
+          valueFrom:
+            secretKeyRef:
+              name: flask-creds
+              key: key2
